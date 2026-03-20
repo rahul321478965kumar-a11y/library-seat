@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Seat Management Pro</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f4f4f4;
+        }
+
+        h1 { color: #333; }
+
+        .seat {
+            width: 110px;
+            height: 110px;
+            margin: 10px;
+            display: inline-block;
+            line-height: 20px;
+            color: white;
+            cursor: pointer;
+            padding-top: 30px;
+            border-radius: 10px;
+        }
+
+        .available { background: green; }
+        .booked { background: red; }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📚 Library Seat Management</h1>
+
+<input type="text" id="name" placeholder="Enter Name">
+<input type="date" id="date">
+
+<br>
+
+<button onclick="resetSeats()">🔐 Admin Reset</button>
+
+<h3 id="count"></h3>
+
+<div id="seats"></div>
+
+<script>
+    let seats = JSON.parse(localStorage.getItem("seats")) || Array(12).fill(null);
+
+    function renderSeats() {
+        let container = document.getElementById("seats");
+        container.innerHTML = "";
+
+        let availableCount = 0;
+
+        seats.forEach((seat, index) => {
+            let div = document.createElement("div");
+
+            if (seat) {
+                div.className = "seat booked";
+                div.innerHTML = "Seat " + (index+1) + "<br>" + seat.name +
+                "<br><button onclick='cancelSeat(" + index + ")'>Cancel</button>";
+            } else {
+                div.className = "seat available";
+                div.innerText = "Seat " + (index+1);
+                availableCount++;
+            }
+
+            div.onclick = () => {
+                let name = document.getElementById("name").value;
+                let date = document.getElementById("date").value;
+
+                if (!name || !date) {
+                    alert("Enter name & date");
+                    return;
+                }
+
+                if (!seats[index]) {
+                    seats[index] = { name, date };
+                    localStorage.setItem("seats", JSON.stringify(seats));
+                    renderSeats();
+                }
+            };
+
+            container.appendChild(div);
+        });
+
+        document.getElementById("count").innerText =
+            "Available Seats: " + availableCount;
+    }
+
+    function cancelSeat(index) {
+        seats[index] = null;
+        localStorage.setItem("seats", JSON.stringify(seats));
+        renderSeats();
+    }
+
+    function resetSeats() {
+        let pass = prompt("Enter admin password:");
+        if (pass === "admin123") {
+            seats = Array(12).fill(null);
+            localStorage.setItem("seats", JSON.stringify(seats));
+            renderSeats();
+        } else {
+            alert("Wrong password!");
+        }
+    }
+
+    renderSeats();
+</script>
+
+</body>
+</html>

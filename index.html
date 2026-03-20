@@ -107,7 +107,7 @@
     function resetSeats() {
         let pass = prompt("Enter admin password:");
         if (pass === "admin123") {
-            seats = Array(12).fill(null);
+            seats = Array(22).fill(null);
             localStorage.setItem("seats", JSON.stringify(seats));
             renderSeats();
         } else {

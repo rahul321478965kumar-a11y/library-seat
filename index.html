@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Library Layout</title>
+<title>Library Seat System</title>
 
 <style>
 body {
@@ -9,70 +9,85 @@ body {
     text-align: center;
 }
 
-/* Main area */
+/* LOGIN */
+#login {
+    margin-top: 100px;
+}
+
+/* Layout */
 .layout {
     position: relative;
-    width: 300px;
-    height: 600px;
+    width: 350px;
+    height: 650px;
     margin: auto;
     border: 2px solid black;
+    display: none;
 }
 
-/* Seat style */
+/* Seat */
 .seat {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 70px;
+    height: 70px;
     background: green;
     color: white;
-    line-height: 40px;
-    border-radius: 6px;
+    font-size: 14px;
+    border-radius: 8px;
+    text-align: center;
+    padding-top: 10px;
+    cursor: pointer;
 }
 
-/* RIGHT COLUMN (1–10) */
-#s1 { top: 20px; right: 10px; }
-#s2 { top: 70px; right: 10px; }
-#s3 { top: 120px; right: 10px; }
-#s4 { top: 170px; right: 10px; }
-#s5 { top: 220px; right: 10px; }
-#s6 { top: 270px; right: 10px; }
-#s7 { top: 320px; right: 10px; }
-#s8 { top: 370px; right: 10px; }
-#s9 { top: 420px; right: 10px; }
-#s10 { top: 470px; right: 10px; }
-
-/* MIDDLE COLUMN (11–16) */
-#s11 { top: 20px; right: 100px; }
-#s12 { top: 70px; right: 100px; }
-#s13 { top: 120px; right: 100px; }
-#s14 { top: 170px; right: 100px; }
-#s15 { top: 220px; right: 100px; }
-#s16 { top: 270px; right: 100px; }
-
-/* LEFT COLUMN (17–22) */
-#s17 { top: 20px; left: 10px; }
-#s18 { top: 70px; left: 10px; }
-#s19 { top: 120px; left: 10px; }
-#s20 { top: 170px; left: 10px; }
-#s21 { top: 220px; left: 10px; transform: rotate(-10deg); }
-#s22 { top: 270px; left: 10px; transform: rotate(-10deg); }
-
-/* Gate label */
+/* Gate */
 .gate {
     position: absolute;
     bottom: 10px;
     left: 10px;
-    font-size: 14px;
 }
-</style>
 
+/* RIGHT (1–10) */
+#s1 { top: 20px; right: 10px; }
+#s2 { top: 90px; right: 10px; }
+#s3 { top: 160px; right: 10px; }
+#s4 { top: 230px; right: 10px; }
+#s5 { top: 300px; right: 10px; }
+#s6 { top: 370px; right: 10px; }
+#s7 { top: 440px; right: 10px; }
+#s8 { top: 510px; right: 10px; }
+#s9 { top: 580px; right: 10px; }
+#s10 { top: 650px; right: 10px; }
+
+/* MIDDLE (11–16) */
+#s11 { top: 20px; right: 120px; }
+#s12 { top: 90px; right: 120px; }
+#s13 { top: 160px; right: 120px; }
+#s14 { top: 230px; right: 120px; }
+#s15 { top: 300px; right: 120px; }
+#s16 { top: 370px; right: 120px; }
+
+/* LEFT (17–22) */
+#s17 { top: 20px; left: 10px; }
+#s18 { top: 90px; left: 10px; }
+#s19 { top: 160px; left: 10px; }
+#s20 { top: 230px; left: 10px; }
+#s21 { top: 300px; left: 10px; transform: rotate(-10deg); }
+#s22 { top: 370px; left: 10px; transform: rotate(-10deg); }
+
+</style>
 </head>
 
 <body>
 
-<h2>📚 Library Layout (Real)</h2>
+<!-- LOGIN -->
+<div id="login">
+    <h2>🔐 Enter Password</h2>
+    <input type="password" id="pass">
+    <button onclick="login()">Login</button>
+</div>
 
-<div class="layout">
+<h2 id="title" style="display:none;">📚 Library Seat System</h2>
+
+<div class="layout" id="layout">
 
 <div class="seat" id="s1">1</div>
 <div class="seat" id="s2">2</div>
@@ -102,29 +117,55 @@ body {
 <div class="gate">🚪 Gate</div>
 
 </div>
-<script>
-let seats = JSON.parse(localStorage.getItem("seats")) || {};
 
-// Load saved seats
+<script>
+let DB = JSON.parse(localStorage.getItem("DB")) || {};
+
+// LOGIN
+function login() {
+    let p = document.getElementById("pass").value;
+    if (p === "library123") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("layout").style.display = "block";
+        document.getElementById("title").style.display = "block";
+    } else {
+        alert("Wrong Password");
+    }
+}
+
+// LOAD + CLICK
 document.querySelectorAll(".seat").forEach(seat => {
     let id = seat.innerText;
 
-    if (seats[id]) {
+    if (DB[id]) {
         seat.style.background = "red";
+        seat.innerText = id + "\n" + DB[id].name;
     }
 
     seat.addEventListener("click", () => {
-        if (seats[id]) {
-            seat.style.background = "green";
-            seats[id] = false;
+        if (DB[id]) {
+            let info = "Name: " + DB[id].name + "\nDate: " + DB[id].date;
+
+            if (confirm(info + "\n\nRemove booking?")) {
+                delete DB[id];
+                seat.style.background = "green";
+                seat.innerText = id;
+            }
         } else {
-            seat.style.background = "red";
-            seats[id] = true;
+            let name = prompt("Enter Name:");
+            let date = prompt("Enter Join Date:");
+
+            if (name && date) {
+                DB[id] = { name, date };
+                seat.style.background = "red";
+                seat.innerText = id + "\n" + name;
+            }
         }
 
-        localStorage.setItem("seats", JSON.stringify(seats));
+        localStorage.setItem("DB", JSON.stringify(DB));
     });
 });
 </script>
+
 </body>
 </html>

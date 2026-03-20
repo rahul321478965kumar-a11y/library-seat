@@ -102,6 +102,29 @@ body {
 <div class="gate">🚪 Gate</div>
 
 </div>
+<script>
+let seats = JSON.parse(localStorage.getItem("seats")) || {};
 
+// Load saved seats
+document.querySelectorAll(".seat").forEach(seat => {
+    let id = seat.innerText;
+
+    if (seats[id]) {
+        seat.style.background = "red";
+    }
+
+    seat.addEventListener("click", () => {
+        if (seats[id]) {
+            seat.style.background = "green";
+            seats[id] = false;
+        } else {
+            seat.style.background = "red";
+            seats[id] = true;
+        }
+
+        localStorage.setItem("seats", JSON.stringify(seats));
+    });
+});
+</script>
 </body>
 </html>

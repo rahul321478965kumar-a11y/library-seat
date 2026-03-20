@@ -9,36 +9,60 @@ body {
     text-align: center;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: 1fr 0.5fr 1fr;
-    gap: 20px;
-    padding: 20px;
+/* Main area */
+.layout {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    margin: auto;
+    border: 2px solid black;
 }
 
 /* Seat style */
 .seat {
+    position: absolute;
+    width: 40px;
+    height: 40px;
     background: green;
     color: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 5px;
+    line-height: 40px;
+    border-radius: 6px;
 }
 
-/* Left & Right */
-.left, .right {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
+/* RIGHT COLUMN (1–10) */
+#s1 { top: 20px; right: 10px; }
+#s2 { top: 70px; right: 10px; }
+#s3 { top: 120px; right: 10px; }
+#s4 { top: 170px; right: 10px; }
+#s5 { top: 220px; right: 10px; }
+#s6 { top: 270px; right: 10px; }
+#s7 { top: 320px; right: 10px; }
+#s8 { top: 370px; right: 10px; }
+#s9 { top: 420px; right: 10px; }
+#s10 { top: 470px; right: 10px; }
 
-/* Walkway */
-.walkway {
-    background: transparent;
-}
+/* MIDDLE COLUMN (11–16) */
+#s11 { top: 20px; right: 100px; }
+#s12 { top: 70px; right: 100px; }
+#s13 { top: 120px; right: 100px; }
+#s14 { top: 170px; right: 100px; }
+#s15 { top: 220px; right: 100px; }
+#s16 { top: 270px; right: 100px; }
 
-/* Corner seats */
-.corner {
-    margin-top: 20px;
+/* LEFT COLUMN (17–22) */
+#s17 { top: 20px; left: 10px; }
+#s18 { top: 70px; left: 10px; }
+#s19 { top: 120px; left: 10px; }
+#s20 { top: 170px; left: 10px; }
+#s21 { top: 220px; left: 10px; transform: rotate(-10deg); }
+#s22 { top: 270px; left: 10px; transform: rotate(-10deg); }
+
+/* Gate label */
+.gate {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 14px;
 }
 </style>
 
@@ -46,47 +70,37 @@ body {
 
 <body>
 
-<h2>📚 Library Seat Layout</h2>
+<h2>📚 Library Layout (Real)</h2>
 
-<div class="container">
+<div class="layout">
 
-    <!-- LEFT SIDE -->
-    <div class="left">
-        <div class="seat">1</div>
-        <div class="seat">2</div>
-        <div class="seat">3</div>
-        <div class="seat">4</div>
-        <div class="seat">5</div>
-        <div class="seat">6</div>
-        <div class="seat">7</div>
-        <div class="seat">8</div>
-        <div class="seat">9</div>
-        <div class="seat">10</div>
-    </div>
+<div class="seat" id="s1">1</div>
+<div class="seat" id="s2">2</div>
+<div class="seat" id="s3">3</div>
+<div class="seat" id="s4">4</div>
+<div class="seat" id="s5">5</div>
+<div class="seat" id="s6">6</div>
+<div class="seat" id="s7">7</div>
+<div class="seat" id="s8">8</div>
+<div class="seat" id="s9">9</div>
+<div class="seat" id="s10">10</div>
 
-    <!-- WALKWAY -->
-    <div class="walkway"></div>
+<div class="seat" id="s11">11</div>
+<div class="seat" id="s12">12</div>
+<div class="seat" id="s13">13</div>
+<div class="seat" id="s14">14</div>
+<div class="seat" id="s15">15</div>
+<div class="seat" id="s16">16</div>
 
-    <!-- RIGHT SIDE -->
-    <div class="right">
-        <div class="seat">11</div>
-        <div class="seat">12</div>
-        <div class="seat">13</div>
-        <div class="seat">14</div>
-        <div class="seat">15</div>
-        <div class="seat">16</div>
-        <div class="seat">17</div>
-        <div class="seat">18</div>
-        <div class="seat">19</div>
-        <div class="seat">20</div>
-    </div>
+<div class="seat" id="s17">17</div>
+<div class="seat" id="s18">18</div>
+<div class="seat" id="s19">19</div>
+<div class="seat" id="s20">20</div>
+<div class="seat" id="s21">21</div>
+<div class="seat" id="s22">22</div>
 
-</div>
+<div class="gate">🚪 Gate</div>
 
-<!-- Corner seats -->
-<div class="corner">
-    <div class="seat" style="display:inline-block; transform:rotate(-15deg);">21</div>
-    <div class="seat" style="display:inline-block; transform:rotate(15deg);">22</div>
 </div>
 
 </body>

@@ -11,25 +11,37 @@ body {
 
 .container {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 10px;
+    grid-template-columns: 1fr 0.5fr 1fr;
+    gap: 20px;
     padding: 20px;
 }
 
+/* Seat style */
 .seat {
     background: green;
     color: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
+    margin: 5px;
 }
 
-/* Layout positioning */
-.front { grid-column: span 6; }
-.back { grid-column: span 6; }
-.side { grid-column: span 8; }
-.corner { grid-column: span 2; transform: rotate(-10deg); }
+/* Left & Right */
+.left, .right {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
 
+/* Walkway */
+.walkway {
+    background: transparent;
+}
+
+/* Corner seats */
+.corner {
+    margin-top: 20px;
+}
 </style>
+
 </head>
 
 <body>
@@ -38,36 +50,43 @@ body {
 
 <div class="container">
 
-<!-- Front 6 -->
-<div class="seat">1</div>
-<div class="seat">2</div>
-<div class="seat">3</div>
-<div class="seat">4</div>
-<div class="seat">5</div>
-<div class="seat">6</div>
+    <!-- LEFT SIDE -->
+    <div class="left">
+        <div class="seat">1</div>
+        <div class="seat">2</div>
+        <div class="seat">3</div>
+        <div class="seat">4</div>
+        <div class="seat">5</div>
+        <div class="seat">6</div>
+        <div class="seat">7</div>
+        <div class="seat">8</div>
+        <div class="seat">9</div>
+        <div class="seat">10</div>
+    </div>
 
-<!-- Back 6 -->
-<div class="seat">7</div>
-<div class="seat">8</div>
-<div class="seat">9</div>
-<div class="seat">10</div>
-<div class="seat">11</div>
-<div class="seat">12</div>
+    <!-- WALKWAY -->
+    <div class="walkway"></div>
 
-<!-- Side 8 -->
-<div class="seat">13</div>
-<div class="seat">14</div>
-<div class="seat">15</div>
-<div class="seat">16</div>
-<div class="seat">17</div>
-<div class="seat">18</div>
-<div class="seat">19</div>
-<div class="seat">20</div>
+    <!-- RIGHT SIDE -->
+    <div class="right">
+        <div class="seat">11</div>
+        <div class="seat">12</div>
+        <div class="seat">13</div>
+        <div class="seat">14</div>
+        <div class="seat">15</div>
+        <div class="seat">16</div>
+        <div class="seat">17</div>
+        <div class="seat">18</div>
+        <div class="seat">19</div>
+        <div class="seat">20</div>
+    </div>
 
-<!-- Corner 2 -->
-<div class="seat corner">21</div>
-<div class="seat corner">22</div>
+</div>
 
+<!-- Corner seats -->
+<div class="corner">
+    <div class="seat" style="display:inline-block; transform:rotate(-15deg);">21</div>
+    <div class="seat" style="display:inline-block; transform:rotate(15deg);">22</div>
 </div>
 
 </body>
